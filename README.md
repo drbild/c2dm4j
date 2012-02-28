@@ -4,6 +4,8 @@ component of the [Android Cloud to Device Messaging (C2DM) framework](http://cod
 retries with exponential backoff and supports both synchronous and asynchronous
 workflows. The asynchronous flow is extensible via response handlers.
 
+C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
+
 Take a look at [http://drbild.github.com/c2dm4j/](http://drbild.github.com/c2dm4j/)
 for complete usage instructions and documentation.
 
@@ -38,22 +40,24 @@ flow, the application thread submitting a message is used to deliver it to the
 C2DM service, blocking while the communication is performed. The application
 code is then responsible for responding to errors (e.g., waiting and retrying if
 the device quota was exceeded). Most users will want the asynchronous flow
-instead. An applications thread submits a message to a queue and background
-worker threads deliver the messages to C2DM. Application threads can access the
-C2DM responses via standard Java `Future`s.
+instead. An application thread submits a message to a queue, from which
+background worker threads deliver messages to C2DM. If desired, the application
+thread can access the C2DM response via a standard Java `Future`. "Handlers" can
+be registered with the asynchronous framework to automatically respond to
+certain responses or errors.
  
 Additional documentation may be found on the 
 [C2DM4j website](http://drbild.github.com/c2dm4j/).
 
 #### Authentication Token Provider
-C2DM uses the Google ClientLogin API for authentication. An authentication
+C2DM uses the [Google ClientLogin API](http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html) for authentication. An authentication
 token obtained from Google must be attached to each request. Google may change
 the token at any time by attaching a new token to a response. C2DM4j obtains and
-persists tokens via an `AuthTokenProvider` . The default provider is `FileAuthTokenProvider`
+persists tokens via an `AuthTokenProvider` . The default provider is `FileAuthTokenProvider`,
 which stores the authentication token in a UTF8-encoded file.
 
 Initialize a token file by saving the initial authentication token obtained from
-Google (see the C2DM website for instructions) into it.  Then obtain an instance of `AuthTokenProvider`:
+Google into a file.  Then create an instance of `AuthTokenProvider`:
 
         String authTokenFilename = "/var/myservice/authtoken.dat"; 
         AuthTokenProvider provider = new FileAuthTokenProvider(authTokenFilename);
@@ -79,7 +83,7 @@ A `Message` instance can be built from the `MessageBuilder` class:
         // Prepare the message
         MessageBuilder builder = new MessageBuilder().collapseKey("a").delayWhileIdle(true);
         builder.registrationId(registrationId);
-        builder.data("key", "value");
+        builder.put("key", "value");
         
         // Get the immutable instance
         Message message = builder.build();
@@ -124,7 +128,7 @@ And send a message, handling the response:
 `AsyncC2dmManager` is the primary interface for the asynchronous flow. The
 default implementation includes global exponential backoff for service
 unavailable and quota exceeded responses, per-device exponential backoff for
-device quota exceeded responses, and respects for 'Retry-After' headers. It
+device quota exceeded responses, and respects 'Retry-After' headers. It
 has three dependencies, `AuthTokenProvider` and `HttpClient` , like the
 synchronous flow, and `ScheduledExecutorService` . The `HttpClient` instance
 must be thread-safe up to the number of threads backing the executor.
