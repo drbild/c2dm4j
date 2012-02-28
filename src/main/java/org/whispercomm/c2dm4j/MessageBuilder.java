@@ -29,7 +29,7 @@ import java.util.Map;
  * MessageBuilder default = new MessageBuilder().collapseKey("a").delayWhileIdle(true); </br>
  * for (MyClient client : myClients) { </br>
  * &nbsp;&nbsp;&nbsp;&nbsp; // Create copy with message-specific info </br>
- * &nbsp;&nbsp;&nbsp;&nbsp; MessageBuilder mb = new MessageBuilder(default).registrationId(client.id).data(client.key, client.value); </br>
+ * &nbsp;&nbsp;&nbsp;&nbsp; MessageBuilder mb = new MessageBuilder(default).registrationId(client.id).put(client.key, client.value); </br>
  * &nbsp;&nbsp;&nbsp;&nbsp; // Assume that C2dmManager c2dmManager was declared elsewhere </br>
  * &nbsp;&nbsp;&nbsp;&nbsp; c2dmManager.pushMessage(mb.build()); </br>
  * }
