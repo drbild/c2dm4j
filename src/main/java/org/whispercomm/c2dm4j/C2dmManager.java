@@ -24,7 +24,7 @@ import org.whispercomm.c2dm4j.impl.DefaultC2dmManager;
 
 /**
  * An interface for pushing messages to clients via the C2DM service.
- * Configuration details (e.g., providing the authentication token) is
+ * Configuration details (e.g., providing the authentication token) are
  * implementation-dependent.
  * <p>
  * Implementations do not implement automatic retry, exponential back off, or
