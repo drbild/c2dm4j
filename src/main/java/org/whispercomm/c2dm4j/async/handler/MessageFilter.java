@@ -16,7 +16,6 @@
 package org.whispercomm.c2dm4j.async.handler;
 
 import org.whispercomm.c2dm4j.Message;
-import org.whispercomm.c2dm4j.async.Context;
 
 /**
  * Interface for a message filter. Methods are provided for filtering when

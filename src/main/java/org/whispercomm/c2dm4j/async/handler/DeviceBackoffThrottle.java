@@ -21,7 +21,6 @@ import java.util.concurrent.ConcurrentMap;
 import org.whispercomm.c2dm4j.Message;
 import org.whispercomm.c2dm4j.Response;
 import org.whispercomm.c2dm4j.ResponseType;
-import org.whispercomm.c2dm4j.async.Context;
 import org.whispercomm.c2dm4j.backoff.Attempt;
 import org.whispercomm.c2dm4j.backoff.Backoff;
 import org.whispercomm.c2dm4j.backoff.BackoffProvider;

@@ -15,7 +15,6 @@
  */
 package org.whispercomm.c2dm4j.async.handler;
 
-import org.whispercomm.c2dm4j.async.Context;
 
 /**
  * Interface for an exception handler. A method is provided to handle exceptions

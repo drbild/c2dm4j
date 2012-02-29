@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.whispercomm.c2dm4j.async;
+package org.whispercomm.c2dm4j.async.handler;
 
 import org.whispercomm.c2dm4j.Message;
 import org.whispercomm.c2dm4j.Response;
-import org.whispercomm.c2dm4j.async.handler.MessageFilter;
-import org.whispercomm.c2dm4j.async.handler.ResponseHandler;
-import org.whispercomm.c2dm4j.async.handler.ThrowableHandler;
+import org.whispercomm.c2dm4j.async.AsyncC2dmManager;
+import java.util.concurrent.Future;
 
 /**
  * Context associated with an object (i.e., {@link Message}, {@link Response},
  * or {@link Throwable}) in the asynchronous flow. The context holds
  * <ul>
  * <li>the object,</li>
- * <li>the {@link FutureResponse} returned by the
+ * <li>the {@link Future} returned by the
  * {@link AsyncC2dmManager#pushMessage(Message)} method call,</li>
  * <li>the delay before the object should be sent or retried,</li>
  * <li>the decision (delay, retry, return, etc.) for the object, and</li>
  * <li>an object map for {@link MessageFilter}, and {@link ResponseHandler}, and
  * {@link ThrowableHandler} instances to store message-specific context.</li>
  * </ul>
- * 
- * @see MessageContext
- * @see ResponseContext
- * @see ThrowableContext
  * 
  * @author David R. Bild
  * 

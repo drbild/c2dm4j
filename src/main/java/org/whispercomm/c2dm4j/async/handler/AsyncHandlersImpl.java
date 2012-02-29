@@ -18,7 +18,6 @@ package org.whispercomm.c2dm4j.async.handler;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.whispercomm.c2dm4j.async.Context;
 import org.whispercomm.c2dm4j.util.CopyOnWriteArrayListMultimap;
 import org.whispercomm.c2dm4j.Message;
 import org.whispercomm.c2dm4j.Response;

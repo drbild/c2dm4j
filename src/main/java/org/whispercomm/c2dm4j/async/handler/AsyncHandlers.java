@@ -18,7 +18,6 @@ package org.whispercomm.c2dm4j.async.handler;
 import org.whispercomm.c2dm4j.Message;
 import org.whispercomm.c2dm4j.Response;
 import org.whispercomm.c2dm4j.ResponseType;
-import org.whispercomm.c2dm4j.async.Context;
 
 /**
  * A collection of {@link MessageFilter}, {@link ResponseHandler}, and

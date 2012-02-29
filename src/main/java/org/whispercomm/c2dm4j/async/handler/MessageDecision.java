@@ -16,7 +16,6 @@
 package org.whispercomm.c2dm4j.async.handler;
 
 import org.whispercomm.c2dm4j.Message;
-import org.whispercomm.c2dm4j.async.Context;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Future;
 

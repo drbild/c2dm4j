@@ -16,7 +16,6 @@
 package org.whispercomm.c2dm4j.async.handler;
 
 import org.whispercomm.c2dm4j.Response;
-import org.whispercomm.c2dm4j.async.Context;
 
 /**
  * Interface for a response handler. A method is provided to handle responses

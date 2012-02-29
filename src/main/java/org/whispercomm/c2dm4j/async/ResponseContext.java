@@ -16,6 +16,7 @@
 package org.whispercomm.c2dm4j.async;
 
 import org.whispercomm.c2dm4j.Response;
+import org.whispercomm.c2dm4j.async.handler.Context;
 import org.whispercomm.c2dm4j.async.handler.ResultDecision;
 
 /**

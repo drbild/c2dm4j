@@ -18,6 +18,8 @@ package org.whispercomm.c2dm4j.async;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.whispercomm.c2dm4j.async.handler.Context;
+
 /**
  * Implementation of {@link Context} useful across all object types.
  * 
