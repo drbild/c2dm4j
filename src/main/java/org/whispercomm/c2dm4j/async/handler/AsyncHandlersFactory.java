@@ -34,10 +34,10 @@ public class AsyncHandlersFactory {
 
 	/**
 	 * Creates a new {@code AsyncHandlers} instance with two registered
-	 * handlers: {@link DeviceBackoffThrottle} and {@link GlobalBackoffThrottle}
-	 * , both using the default {@link ExponentialBackoff} parameters.
+	 * handlers: {@link DeviceBackoffThrottle} and {@link GlobalBackoffThrottle},
+	 * both using the default {@link ExponentialBackoff} parameters.
 	 * 
-	 * @return
+	 * @return the handlers instance with the default throttles registered
 	 */
 	public static AsyncHandlers create() {
 		AsyncHandlers handlers = createEmpty();
