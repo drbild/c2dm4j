@@ -45,6 +45,8 @@ background worker threads deliver messages to C2DM. If desired, the application
 thread can access the C2DM response via a standard Java `Future`. "Handlers" can
 be registered with the asynchronous framework to automatically respond to
 certain responses or errors.
+
+Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
  
 Additional documentation may be found on the 
 [C2DM4j website](http://drbild.github.com/c2dm4j/).
