@@ -6,7 +6,7 @@ workflows. The asynchronous flow is extensible via response handlers.
 
 C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
 
-Take a look at [http://drbild.github.com/c2dm4j/](http://drbild.github.com/c2dm4j/)
+Take a look at [http://drbild.github.com/C2DM4j/](http://drbild.github.com/C2DM4j/)
 for complete usage instructions and documentation.
 
 ## Downloads
@@ -156,6 +156,9 @@ And send a message, handling the response when desired:
         // Do some other work
         
         // Handle response, if/when desired (this could be on a different thread)
+	// If you don't about handling rare errors, (the manager has already taken care
+        // of retries with exponential backoff for quota exceeded errors and service 
+        // unavailable errors) just ignore the future returned by manager.pushMessage().
         Response response = future.get();  // Blocks until response is available
         switch(response.getResponseType()) {
         case SUCCESS:
