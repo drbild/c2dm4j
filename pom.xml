@@ -9,7 +9,7 @@
   <description>A Java library for implementing the third-party
   application server component of the Android Cloud to Device
   Messaging framework.</description>
-  <url>http://c2dm4j.whispercomm.org</url>
+  <url>http://drbild.whispercomm.org/c2dm4j/</url>
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
