@@ -18,8 +18,9 @@
     </license>
   </licenses>
   <scm>
-    <url>http://github.com/drbild/c2dm4j/</url>
-    <connection>scm:git:git://github.com/drbild/c2dm4j.git</connection>
+    <connection>scm:git:git@github.com:drbild/c2dm4j.git</connection>
+    <developerConnection>scm:git:git@github.com:drbild/c2dm4j.git</developerConnection>
+    <url>git@github.com:drbild/c2dm4j.git</url>
   </scm>
   <parent>
     <groupId>org.sonatype.oss</groupId>
