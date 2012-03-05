@@ -1,2 +1,2 @@
 C2DM4j
-Copyright 2012 The University of Michigan
+Copyright 2012 The Regents of the University of Michigan

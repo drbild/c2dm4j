@@ -197,7 +197,7 @@ Then import the project into your workspace.
 + [http://github.com/drbild](http://github.com/drbild)
 
 ##License
-Copyright 2012 The University of Michigan
+Copyright 2012 The Regents of the University of Michigan
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this work except in compliance with the License. You may obtain a copy of the
