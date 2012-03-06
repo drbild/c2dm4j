@@ -153,8 +153,8 @@ And send a message, handling the response when desired:
         
         // Do some other work
         
-        // Handle response, if/when desired (this could be on a different thread)
-	// If you don't about handling rare errors, (the manager has already taken care
+        // Handle response, if/when desired (this could be on a different thread).
+        // If you care don't about handling rare errors, (the manager has already taken care
         // of retries with exponential backoff for quota exceeded errors and service 
         // unavailable errors) just ignore the future returned by manager.pushMessage().
         Response response = future.get();  // Blocks until response is available
