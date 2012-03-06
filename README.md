@@ -16,10 +16,10 @@ C2DM4j will be available from Maven Central and as a jar file.
         <dependency>
             <groupId>org.whispercomm.c2dm4j</groupId>
             <artifactId>c2dm4j</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         
-+  Jar: [c2dm4j-1.0-SNAPSHOT.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-sources.jar))
++  Jar: [c2dm4j-1.0.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-sources.jar))
 
 ## Dependencies
 C2DM4j uses the following libraries:
