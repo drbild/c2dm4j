@@ -6,8 +6,10 @@ workflows. The asynchronous flow is extensible via response handlers.
 
 C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
 
-Take a look at [http://drbild.github.com/C2DM4j/](http://drbild.github.com/C2DM4j/)
-for complete usage instructions and documentation.
+See the Usage section below for instructions or take a look at [http://drbild.github.com/C2DM4j/](http://drbild.github.com/C2DM4j/)
+for further explanation and documentation.
+
+Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
 
 ## Downloads
 C2DM4j will be available from Maven Central and as a jar file.
@@ -31,21 +33,133 @@ C2DM4j uses the following libraries:
 +  [Apache Commons IO](http://commons.apache.org/io/)
 
 ## Usage
-C2DM4j supports two workflows, synchronous and asynchronous. In the synchronous
-flow, the application thread submitting a message is used to deliver it to the
-C2DM service, blocking while the communication is performed. The application
-code is then responsible for responding to errors (e.g., waiting and retrying if
-the device quota was exceeded). Most users will want the asynchronous flow
-instead. An application thread submits a message to a queue, from which
-background worker threads deliver messages to C2DM. If desired, the application
-thread can access the C2DM response via a standard Java `Future`. "Handlers" can
-be registered with the asynchronous framework to automatically respond to
-certain responses or errors.
+C2DM4j supports two workflow flows, synchronous and asynchronous. In the
+synchronous flow, the application thread submitting a message is used to deliver
+the message to the C2DM service and no error-handling or retrying is done
+automatically. Most users will want the asynchronous flow, in which the
+application thread submits a message to a queue and a background thread delivers
+the message to C2DM and can automatically response to errors and retries. The
+final response is still available to the submitting application thread via a [Future](http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Future.html).
 
-Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
- 
-Additional documentation may be found on the 
-[C2DM4j website](http://drbild.github.com/c2dm4j/).
+Example code follows.
+
+Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html). See 
+[C2DM4j website](http://drbild.github.com/c2dm4j/) for additional documentation.
+
+#### Synchronous Quickstart (most users will want the asynchronous quickstart)
+The synchronous flow is easy to setup and use, but doesn't automatically handle
+any errors.  First, configure the `C2DMManager`.
+
+```java
+/* Read the C2DM authentication token from a file */
+AuthTokenProvider provider = new FileAuthTokenProvider("/var/myservice/authtoken.dat");
+
+/* Create an HttpClient instance. This HttpClient implementation is not
+ * thread-safe, so concurrent calls to C2DMManager.pushMessage() are now allowed.
+ */
+HttpClient client = new DefaultHttpClient();
+
+/* Create the C2DM Manager */
+C2DMManager manager = new DefaultC2dmManager(client, provider);
+```
+
+Then send a message to a client.
+
+```java
+/* Build message */
+Message = new MessageBuilder().collapseKey("myCollapseKey")
+                              .delayWhileIdle(true)
+                              .registrationId("registrationKeyFromClient")
+                              .put("myKey", "myValue")
+                              .build();
+
+/* Send to C2DM, ignoring the response */
+manager.pushMessage(message);
+```
+
+To handle errors, check the response.
+
+```java
+/* Send to C2DM, checking the response */
+Response response = manager.pushMessage(message);
+
+switch (response.getResponseType()) {
+    case Success:
+        // Do nothing
+        break;
+    case ServiceUnavailable:
+        // TODO: Backoff and try again
+        break;
+    /* TODO: Handle remaining ResponseType values */
+    default:
+        break;
+}
+```
+
+#### Asynchronous Flow Quickstart
+The asynchronous flow is similar, but a `ScheduledExecutorService` instance is
+needed to do message delivery in the background and the `HttpClient` instance must be thread-safe.
+
+This flow will automatically handle exponential backoff and retries for service
+unavailable and quota exceeded errors, handle per-device exponential backoff and
+retries for device quota exceeded errors, and will respect `Retry-After` headers
+on service unavailable errors.
+
+First, configure the `AsyncC2DMManager`.
+
+```java
+/* Create an executor backed by MAX_THREADS threads */
+int MAX_THREADS = 8;
+ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(MAX_THREADS);
+
+/* Create a thread-safe (up to MAX_THREADS) HttpClient instance */
+ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager();
+conmManager.setMaxTotal(MAX_THREADS);
+connManager.setDefaultMaxPerRoute(MAX_THREADS);
+HttpClient client = new DefaultHttpClient(connManager);
+
+/* Read the C2DM authentication token from a file */
+AuthTokenProvider provider = new FileAuthTokenProvider("/var/myservice/authtoken.dat");
+                
+/* Create AsyncC2dmManager instance */
+AsyncC2dmManager manager = AsyncC2dmManagerFactory.create(client, provider, executor);
+```
+
+Then send a message to a client.
+
+```java
+/* Build message */
+Message = new MessageBuilder().collapseKey("myCollapseKey")
+                              .delayWhileIdle(true)
+                              .registrationId("registrationKeyFromClient")
+                              .put("myKey", "myValue")
+                              .build();
+
+/* Send to C2DM, ignoring the response */
+manager.pushMessage(message);
+```
+
+To handle errors not taken care of automatically, check the response.
+
+```java
+/* Send to C2DM, checking the response via the Future */
+Future<Response> future = manager.pushMessage(message);
+        
+/* When ready to wait on the response, make a blocking call to future.get() */
+Response response = future.get();  // Blocks until response is available
+
+switch(response.getResponseType()) {
+    case Success:
+        // do nothing
+        break;
+    case InvalidRegistration:
+        // TODO: client has unregistered, so remove
+        break;
+    /* TODO: Handle remaining ResponseType values */
+    default:
+        break;
+}
+```
 
 #### Authentication Token Provider
 C2DM uses the [Google ClientLogin API](http://code.google.com/apis/accounts/docs/AuthForInstalledApps.html) for authentication. An authentication
@@ -57,8 +171,10 @@ which stores the authentication token in a UTF8-encoded file.
 Initialize a token file by saving the initial authentication token obtained from
 Google into a file.  Then create an instance of `AuthTokenProvider`:
 
-        String authTokenFilename = "/var/myservice/authtoken.dat"; 
-        AuthTokenProvider provider = new FileAuthTokenProvider(authTokenFilename);
+```java
+String authTokenFilename = "/var/myservice/authtoken.dat"; 
+AuthTokenProvider provider = new FileAuthTokenProvider(authTokenFilename);
+```
 
 The contents of `"/var/myservice/authtoken.dat"` will be used as the initial
 token and any changes will be persisted to the same file.
@@ -76,104 +192,55 @@ and the data to be delivered to the client
 
 +  key-value pairs.
 
-A `Message` instance can be built from the `MessageBuilder` class:
+A `Message` instance can be built from the `MessageBuilder` class. The class can
+be cloned, to allow initial partial configuration.
 
-        // Prepare the message
-        MessageBuilder builder = new MessageBuilder().collapseKey("a").delayWhileIdle(true);
-        builder.registrationId(registrationId);
-        builder.put("key", "value");
-        
-        // Get the immutable instance
-        Message message = builder.build();
+```java
+/* Prepare the default message builder */
+MessageBuilder default = new MessageBuilder().collapseKey("a").delayWhileIdle(true);
 
-#### Synchronous Flow
-`C2dmManager` is the primary interface for the synchronous flow. The default
-implementation has two dependencies, an `AuthTokenProvider` instance, covered in
-the prior section, and a `HttpClient` instance. The manager is thread-safe only
-if the provided `HttpClient` instance is.
+/* Use a clone to build up a specific message */
+MessageBuilder builder = new MessageBuilder(default).registrationId("registrationKeyFromClient")
+                                                    .put("myKey", "myValue");
 
-Create an instance of `C2dmManager` :
-
-        // Create an HttpClient instance that is thread-safe up to MAX_THREADS threads
-        int MAX_THREADS = 8;
-		ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager();
-        conmManager.setMaxTotal(MAX_THREADS);
-        connManager.setDefaultMaxPerRoute(MAX_THREADS);
-        HttpClient client = new DefaultHttpClient(connManager);
-
-	    // Create the C2dmManager instance
-        C2dmManager manager = new DefaultC2dmManager(client, provider);
-
-And send a message, handling the response:
-
-	    // Send message
-        Response response = manager.pushMessage(message);
-        
-        // Handle response
-        // See the ResponseType javadoc for a full list of possible responses 
-        switch (response.getResponseType()) {
-        case SUCCESS:
-            // Do nothing
-            break;
-        case SERVICE_UNAVAILABLE:
-            // Backoff and try again
-            break;
-        default:
-            break;
-        }
-
-#### Asynchronous Flow
-`AsyncC2dmManager` is the primary interface for the asynchronous flow. The
-default implementation includes global exponential backoff for service
-unavailable and quota exceeded responses, per-device exponential backoff for
-device quota exceeded responses, and respects 'Retry-After' headers. It
-has three dependencies, `AuthTokenProvider` and `HttpClient` , like the
-synchronous flow, and `ScheduledExecutorService` . The `HttpClient` instance
-must be thread-safe up to the number of threads backing the executor.
-
-Create an instance of `AsyncC2dmManager`:
-	
-	    // Create an HttpClient instance that is thread-safe up to MAX_THREADS threads
-        int MAX_THREADS = 8;
-		ThreadSafeClientConnManager connManager = new ThreadSafeClientConnManager();
-        conmManager.setMaxTotal(MAX_THREADS);
-        connManager.setDefaultMaxPerRoute(MAX_THREADS);
-        HttpClient client = new DefaultHttpClient(connManager);
-        
-        // Create a ScheduledExecutorService backed by MAX_THREADS threads
-        ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(MAX_THREADS);
-        
-        // Create AsyncC2dmManager instance
-        AsyncC2dmManager manager = AsyncC2dmManagerFactory.create(client, provider, executor);
-        
-And send a message, handling the response when desired:
-
-        // Send message
-        Future<Response> future = manager.pushMessage(message);
-        
-        // Do some other work
-        
-        // Handle response, if/when desired (this could be on a different thread).
-        // If you care don't about handling rare errors, (the manager has already taken care
-        // of retries with exponential backoff for quota exceeded errors and service 
-        // unavailable errors) just ignore the future returned by manager.pushMessage().
-        Response response = future.get();  // Blocks until response is available
-        switch(response.getResponseType()) {
-        case SUCCESS:
-        	// do nothing
-        	break;
-        case INVALID_REGISTRATION:
-            // client has unregistered; remove
-            break;
-        default:
-            break;
-        }
+/* Get the immutable message instance */
+Message message = builder.build();
+```
 
 #### Custom Asynchronous Handlers
 The asynchronous flow can be extended by registering additional `MessageFilter`, 
-`ResponseHandler` , and `ThrowableHandler` instances. Most users will not need
-these features. Full documentation is available in the `AsyncHandlers` javadoc
-and the [C2DM4j website](http://drbild.github.com/c2dm4j/).
+`ResponseHandler`, and `ThrowableHandler` instances with the `AsyncC2dmManager`
+instance.
+
+Create the `AsyncC2dmManager` instance with a custom set of `AsyncHandlers`.
+
+```java
+/* Create a handler to unregister a client on a InvalidRegistration error */
+MyClientDatastore clientDatastore; // Assume this was instantiated elsewhere
+ResponseHandler invalidRegHandler = new ResponseHandler<Response>() {
+    @Override
+    public void handleResponse(Context<Response, ResultDecision> context) {
+        Response response = context.unwrap();
+
+	    // Don't retry, just return the error to the future
+        context.setDecision(ResultDecision.RETURN);
+            
+        // Unregister from the client data store
+        clientDatastore.unregister(response.getMessage().getRegistrationId());
+    }
+};
+
+/* Create a set of handlers already populated with those for automatic exponential
+ * backoff and retry and add the custom handler.
+ */
+AsyncHandlers handlers = AsyncHandlersFactory.create();
+handlers.appendResponseHandler(ResponseType.InvalidRegistration, invalidRegHandler);
+
+/* Create AsyncC2dmManager instance.
+ * client, provider, and executor are created as in the default asynchronous flow example 
+ */
+AsyncC2dmManager manager = AsyncC2dmManagerFactory.create(client, provider, handlers, executor);
+```
 
 ## Contributions
 Contributions are welcome. Please submit them as pull requests on [GitHub](http://github.com/drbild/C2DM4j).
