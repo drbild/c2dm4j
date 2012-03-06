@@ -202,9 +202,10 @@ Message message = builder.build();
 ```
 
 #### Custom Asynchronous Handlers
-The asynchronous flow can be extended by registering additional `MessageFilter`, 
+The asynchronous flow can be extended by registering additional `MessageFilter`,
 `ResponseHandler`, and `ThrowableHandler` instances with the `AsyncC2dmManager`
-instance.
+instance. A simple example follows. See the code for [`DeviceBackoffThrottle`](https://github.com/drbild/C2DM4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/DeviceBackoffThrottle.java)
+and [`GlobalBackoffThrottle`](https://github.com/drbild/C2DM4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/GlobalBackoffThrottle.java) for more detailed examples.
 
 Create the `AsyncC2dmManager` instance with a custom set of `AsyncHandlers`.
 
