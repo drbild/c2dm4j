@@ -6,10 +6,7 @@ workflows. The asynchronous flow is extensible via response handlers.
 
 C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
 
-See the Usage section below for instructions or take a look at [http://drbild.github.com/C2DM4j/](http://drbild.github.com/C2DM4j/)
-for further explanation and documentation.
-
-Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
+See the Usage section below for instructions or browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
 
 ## Downloads
 C2DM4j will be available from Maven Central and as a jar file.
@@ -41,10 +38,7 @@ application thread submits a message to a queue and a background thread delivers
 the message to C2DM and can automatically response to errors and retries. The
 final response is still available to the submitting application thread via a [Future](http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Future.html).
 
-Example code follows.
-
-Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html). See 
-[C2DM4j website](http://drbild.github.com/c2dm4j/) for additional documentation.
+Example code follows. Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
 
 #### Synchronous Quickstart (most users will want the asynchronous quickstart)
 The synchronous flow is easy to setup and use, but doesn't automatically handle
