@@ -6,7 +6,7 @@ workflows. The asynchronous flow is extensible via response handlers.
 
 C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0).
 
-See the Usage section below for instructions or browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
+See the Usage section below for instructions or browse the [javadocs](http://drbild.github.com/c2dm4j/apidocs/index.html).
 
 ## Downloads
 C2DM4j will be available from Maven Central and as a jar file.
@@ -19,7 +19,7 @@ C2DM4j will be available from Maven Central and as a jar file.
             <version>1.0-SNAPSHOT</version>
         </dependency>
         
-+  Jar: [c2dm4j-1.0-SNAPSHOT.jar](http://github.com/downloads/drbild/C2DM4j/c2dm4j-1.0-SNAPSHOT.jar) ([javadoc](http://github.com/downloads/drbild/C2DM4j/c2dm4j-1.0-SNAPSHOT-javadoc.jar)) ([source](http://github.com/downloads/drbild/C2DM4j/c2dm4j-1.0-SNAPSHOT-sources.jar))
++  Jar: [c2dm4j-1.0-SNAPSHOT.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-sources.jar))
 
 ## Dependencies
 C2DM4j uses the following libraries:
@@ -38,7 +38,7 @@ application thread submits a message to a queue and a background thread delivers
 the message to C2DM and can automatically response to errors and retries. The
 final response is still available to the submitting application thread via a [Future](http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Future.html).
 
-Example code follows. Browse the [javadocs](http://drbild.github.com/C2DM4j/apidocs/index.html).
+Example code follows. Browse the [javadocs](http://drbild.github.com/c2dm4j/apidocs/index.html).
 
 #### Synchronous Quickstart (most users will want the asynchronous quickstart)
 The synchronous flow is easy to setup and use, but doesn't automatically handle
@@ -204,8 +204,8 @@ Message message = builder.build();
 #### Custom Asynchronous Handlers
 The asynchronous flow can be extended by registering additional `MessageFilter`,
 `ResponseHandler`, and `ThrowableHandler` instances with the `AsyncC2dmManager`
-instance. A simple example follows. See the code for [`DeviceBackoffThrottle`](https://github.com/drbild/C2DM4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/DeviceBackoffThrottle.java)
-and [`GlobalBackoffThrottle`](https://github.com/drbild/C2DM4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/GlobalBackoffThrottle.java) for more detailed examples.
+instance. A simple example follows. See the code for [`DeviceBackoffThrottle`](https://github.com/drbild/c2dm4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/DeviceBackoffThrottle.java)
+and [`GlobalBackoffThrottle`](https://github.com/drbild/c2dm4j/blob/master/src/main/java/org/whispercomm/c2dm4j/async/handler/GlobalBackoffThrottle.java) for more detailed examples.
 
 Create the `AsyncC2dmManager` instance with a custom set of `AsyncHandlers`.
 
@@ -238,7 +238,7 @@ AsyncC2dmManager manager = AsyncC2dmManagerFactory.create(client, provider, hand
 ```
 
 ## Contributions
-Contributions are welcome. Please submit them as pull requests on [GitHub](http://github.com/drbild/C2DM4j).
+Contributions are welcome. Please submit them as pull requests on [GitHub](http://github.com/drbild/c2dm4j).
 
 ## Development
 C2DM4j uses Maven as its build tool. Source code resides in the `src/main/java/`
