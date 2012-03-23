@@ -23,7 +23,6 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.junit.Before;
 import org.junit.Test;
 import org.whispercomm.c2dm4j.Message;
@@ -86,7 +85,7 @@ public class C2dmHttpPostTest {
 		assertThat(post.getEntity().getContentType().getValue(),
 				is(String.format(
 						"application/x-www-form-urlencoded; charset=%s",
-						HTTP.DEFAULT_CONTENT_CHARSET)));
+						"UTF-8")));
 	}
 
 	@Test
