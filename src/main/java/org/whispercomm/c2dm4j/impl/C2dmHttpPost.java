@@ -78,7 +78,7 @@ class C2dmHttpPost extends HttpPost {
 		}
 
 		try {
-			this.setEntity(new UrlEncodedFormEntity(params));
+			this.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			/*
 			 * This should not be a checked exception. Good testing will catch
