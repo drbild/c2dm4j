@@ -31,6 +31,8 @@ import org.whispercomm.c2dm4j.Response;
 import org.whispercomm.c2dm4j.ResponseType;
 import org.whispercomm.c2dm4j.async.handler.AsyncHandlers;
 import org.whispercomm.c2dm4j.async.handler.AsyncHandlersFactory;
+import org.whispercomm.c2dm4j.async.handler.GlobalBackoffThrottle;
+import org.whispercomm.c2dm4j.backoff.ExponentialBackoff;
 import org.whispercomm.c2dm4j.impl.MockC2dmManager;
 
 /**
@@ -71,4 +73,18 @@ public class AsyncC2dmManagerTest {
 		assertThat(fut.get().getResponseType(), is(ResponseType.Success));
 	}
 
+	@Test(timeout = 1000)
+	public void testRetriesOnFailure() throws InterruptedException,
+			ExecutionException {
+		new GlobalBackoffThrottle(new ExponentialBackoff(), handlers);
+
+		manager.enqueue(ResponseType.QuotaExceeded);
+		manager.enqueue(ResponseType.QuotaExceeded);
+		manager.enqueue(ResponseType.QuotaExceeded);
+		manager.enqueue(ResponseType.QuotaExceeded);
+		manager.enqueue(ResponseType.Success);
+
+		Future<Response> fut = cut.pushMessage(msg);
+		assertThat(fut.get().getResponseType(), is(ResponseType.Success));
+	}
 }

@@ -104,6 +104,7 @@ class AsyncC2dmManagerImpl implements AsyncC2dmManager {
 	}
 
 	private void process(MessageContext context) {
+		context.setDelay(0);
 		handlers.filterMessageDequeue(context);
 		switch (context.getDecision()) {
 		case SEND:
