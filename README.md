@@ -16,10 +16,10 @@ C2DM4j is available from Maven Central and as a jar file.
         <dependency>
             <groupId>org.whispercomm.c2dm4j</groupId>
             <artifactId>c2dm4j</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
         
-+  Jar: [c2dm4j-1.0.1.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.1.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.1-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.1-sources.jar))
++  Jar: [c2dm4j-1.0.2.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2-sources.jar))
 
 ## Dependencies
 C2DM4j uses the following libraries:
@@ -31,6 +31,8 @@ C2DM4j uses the following libraries:
 
 ## Changelog
 
++  1.0.2 (June 2, 2012)
+   +  zero the message delay after dequeuing (David R. Bild, reported by Noriaki Kadota)
 +  1.0.1 (March 23, 2012)
    +  use UTF-8 encoding for the body of POST requests sent to C2DM (Noriaki Kadota)
    +  fix project url in pom.xml (David R. Bild)
