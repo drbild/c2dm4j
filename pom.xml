@@ -4,7 +4,7 @@
   <groupId>org.whispercomm.c2dm4j</groupId>
   <artifactId>c2dm4j</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.0.2</version>
   <name>C2DM4j</name>
   <description>A Java library for implementing the third-party
   application server component of the Android Cloud to Device
