@@ -9,17 +9,17 @@ C2DM4j is released under the [Apache 2.0 license](http://www.apache.org/licenses
 See the Usage section below for instructions or browse the [javadocs](http://drbild.github.com/c2dm4j/apidocs/index.html).
 
 ## Downloads
-C2DM4j will be available from Maven Central and as a jar file.
+C2DM4j is available from Maven Central and as a jar file.
 
 +  Maven Central:
         
         <dependency>
             <groupId>org.whispercomm.c2dm4j</groupId>
             <artifactId>c2dm4j</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
         
-+  Jar: [c2dm4j-1.0-SNAPSHOT.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0-SNAPSHOT-sources.jar))
++  Jar: [c2dm4j-1.0.2.jar](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2.jar) ([javadoc](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2-javadoc.jar)) ([source](http://github.com/downloads/drbild/c2dm4j/c2dm4j-1.0.2-sources.jar))
 
 ## Dependencies
 C2DM4j uses the following libraries:
@@ -28,6 +28,14 @@ C2DM4j uses the following libraries:
 +  [SLF4J](http://www.slf4j.org/)
 +  [Google Guava](http://code.google.com/p/guava-libraries/) 
 +  [Apache Commons IO](http://commons.apache.org/io/)
+
+## Changelog
+
++  1.0.2 (June 2, 2012)
+   +  zero the message delay after dequeuing (David R. Bild, reported by Noriaki Kadota)
++  1.0.1 (March 23, 2012)
+   +  use UTF-8 encoding for the body of POST requests sent to C2DM (Noriaki Kadota)
+   +  fix project url in pom.xml (David R. Bild)
 
 ## Usage
 C2DM4j supports two workflow flows, synchronous and asynchronous. In the
