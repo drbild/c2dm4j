@@ -50,26 +50,26 @@ Example code follows. Browse the [javadocs](http://drbild.github.com/c2dm4j/apid
 
 #### Synchronous Quickstart (most users will want the asynchronous quickstart)
 The synchronous flow is easy to setup and use, but doesn't automatically handle
-any errors.  First, configure the `C2DMManager`.
+any errors.  First, configure the `C2dmManager`.
 
 ```java
 /* Read the C2DM authentication token from a file */
 AuthTokenProvider provider = new FileAuthTokenProvider("/var/myservice/authtoken.dat");
 
 /* Create an HttpClient instance. This HttpClient implementation is not
- * thread-safe, so concurrent calls to C2DMManager.pushMessage() are now allowed.
+ * thread-safe, so concurrent calls to C2dmManager.pushMessage() are now allowed.
  */
 HttpClient client = new DefaultHttpClient();
 
 /* Create the C2DM Manager */
-C2DMManager manager = new DefaultC2dmManager(client, provider);
+C2dmManager manager = new DefaultC2dmManager(client, provider);
 ```
 
 Then send a message to a client.
 
 ```java
 /* Build message */
-Message = new MessageBuilder().collapseKey("myCollapseKey")
+Message message = new MessageBuilder().collapseKey("myCollapseKey")
                               .delayWhileIdle(true)
                               .registrationId("registrationKeyFromClient")
                               .put("myKey", "myValue")
@@ -131,7 +131,7 @@ Then send a message to a client.
 
 ```java
 /* Build message */
-Message = new MessageBuilder().collapseKey("myCollapseKey")
+Message message = new MessageBuilder().collapseKey("myCollapseKey")
                               .delayWhileIdle(true)
                               .registrationId("registrationKeyFromClient")
                               .put("myKey", "myValue")
@@ -220,7 +220,7 @@ Create the `AsyncC2dmManager` instance with a custom set of `AsyncHandlers`.
 ```java
 /* Create a handler to unregister a client on a InvalidRegistration error */
 MyClientDatastore clientDatastore; // Assume this was instantiated elsewhere
-ResponseHandler invalidRegHandler = new ResponseHandler<Response>() {
+ResponseHandler<Response> invalidRegHandler = new ResponseHandler<Response>() {
     @Override
     public void handleResponse(Context<Response, ResultDecision> context) {
         Response response = context.unwrap();
