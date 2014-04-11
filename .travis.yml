@@ -13,5 +13,5 @@ addons:
       description: "Java library for the server compontent of the Android Cloud to Device Messaging (C2DM) framework."
     notification_email: drbild@umich.edu
     build_command_prepend:
-    build_command:
+    build_command: mvn package
     branch_pattern: coverity_scan
