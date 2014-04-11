@@ -1,1 +1,17 @@
 language: java
+
+env:
+  global:
+    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+    # via the "travis encrypt" command using the project repo's public key
+    - secure: "VuMEt8kSVxvEIaHBwD9DdXKJb/EzrZUePWN0qxqVk4UVF1DBj+DvofGcHVcKerMAcdFw92TMJ0BQIYH2LQaLBfvEgEjwcar4qGMpZLZ34kX6gt3KZMKK8WvPcMftPRoWSZ6RB7dwTFNBVPBX4BdOtWxUZuGyBXT6GAEqPlcTJL4="
+
+addons:
+  coverity_scan:
+    project:
+      name: "drbild/c2dm4j"
+      description: "Java library for the server compontent of the Android Cloud to Device Messaging (C2DM) framework."
+    notification_email: drbild@umich.edu
+    build_command_prepend:
+    build_command:
+    branch_pattern: coverity_scan
