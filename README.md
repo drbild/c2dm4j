@@ -43,7 +43,7 @@ synchronous flow, the application thread submitting a message is used to deliver
 the message to the C2DM service and no error-handling or retrying is done
 automatically. Most users will want the asynchronous flow, in which the
 application thread submits a message to a queue and a background thread delivers
-the message to C2DM and can automatically response to errors and retries. The
+the message to C2DM and can automatically respond to errors and retries. The
 final response is still available to the submitting application thread via a [Future](http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Future.html).
 
 Example code follows. Browse the [javadocs](http://drbild.github.com/c2dm4j/apidocs/index.html).
@@ -57,7 +57,7 @@ any errors.  First, configure the `C2dmManager`.
 AuthTokenProvider provider = new FileAuthTokenProvider("/var/myservice/authtoken.dat");
 
 /* Create an HttpClient instance. This HttpClient implementation is not
- * thread-safe, so concurrent calls to C2dmManager.pushMessage() are now allowed.
+ * thread-safe, so concurrent calls to C2dmManager.pushMessage() are not allowed.
  */
 HttpClient client = new DefaultHttpClient();
 
