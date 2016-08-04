@@ -1,4 +1,7 @@
-# C2DM4j [![Build Status](https://travis-ci.org/drbild/c2dm4j.png?branch=master)](https://travis-ci.org/drbild/c2dm4j)
+# C2DM4j [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/) [![Build Status](https://travis-ci.org/drbild/c2dm4j.png?branch=master)](https://travis-ci.org/drbild/c2dm4j)
+
+NOTE: The library has been deprecated since [GCM](https://developers.google.com/cloud-messaging/) replaced [C2DM](http://code.google.com/android/c2dm/).
+
 C2DM4j is a Java library for implementing the third-party application server
 component of the [Android Cloud to Device Messaging (C2DM) framework](http://code.google.com/android/c2dm/). It implements features like automated
 retries with exponential backoff and supports both synchronous and asynchronous
